@@ -1,5 +1,6 @@
-url: "https://anssl.cn"
-baseurl: "/blog"
+url: "https://y377.github.io"
+baseurl: "/anssl_blog"
+
 
 title: "AnSSL博客" # 网站标题
 author: "AnSSL团队" # 作者名称
