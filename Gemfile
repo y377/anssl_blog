@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "jekyll"
+gem "jekyll", "~> 4.4.1"
 
 # Windows系统需要的依赖
 gem "tzinfo", "~> 2.0"
