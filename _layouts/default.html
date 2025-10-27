@@ -7,16 +7,16 @@
   <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
   
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | absolute_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   
   <!-- Color theme script - 放在head中减少闪烁 -->
-  <script src="{{ '/assets/js/color-theme.js' | absolute_url }}"></script>
+  <script src="{{ '/assets/js/color-theme.js' | relative_url }}"></script>
   
   <!-- SEO Tags -->
   {% seo %}
   
   <!-- RSS Feed -->
-  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | absolute_url }}">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
 </head>
 <body>
   <!-- 导航栏 -->
@@ -26,7 +26,7 @@
         <div class="col-lg-11 col-xl-10">
           <div class="d-flex justify-content-between align-items-center w-100">
             <!-- 网站标题 -->
-            <a class="navbar-brand fw-bold text-body-emphasis text-decoration-none" href="{{ '/' | absolute_url }}">
+            <a class="navbar-brand fw-bold text-body-emphasis text-decoration-none" href="{{ '/' | relative_url }}">
               <i class="bi bi-shield-check me-2 text-primary"></i>ANSSL 技术博客
             </a>
             
@@ -63,7 +63,7 @@
           <p class="text-body-secondary small mb-0">
             <a href="mailto:{{ site.email }}" class="text-decoration-none">联系我们</a> | 
             <a href="https://anssl.cn" class="text-decoration-none" target="_blank">访问官网</a> | 
-            <a href="{{ '/feed.xml' | absolute_url }}" class="text-decoration-none" target="_blank">
+            <a href="{{ '/feed.xml' | relative_url }}" class="text-decoration-none" target="_blank">
               <i class="bi bi-rss me-1"></i>RSS订阅
             </a>
           </p>
@@ -78,7 +78,7 @@
   </button>
 
   <!-- Bootstrap JS -->
-  <script src="{{ '/assets/js/bootstrap.bundle.min.js' | absolute_url }}"></script>
+  <script src="{{ '/assets/js/bootstrap.bundle.min.js' | relative_url }}"></script>
   
   <!-- 回到顶部功能 -->
   <script>
