@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'zh-CN' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ page.description | default: site.description }}">
+  <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+  
+  <!-- Color theme script - 放在head中减少闪烁 -->
+  <script src="{{ '/assets/js/color-theme.js' | relative_url }}"></script>
+  
+  <!-- SEO Tags -->
+  {% seo %}
+  
+  <!-- RSS Feed -->
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="navbar navbar-expand-lg bg-body border-bottom">
+    <div class="container">
+      <div class="row w-100 justify-content-center">
+        <div class="col-lg-11 col-xl-10">
+          <div class="d-flex justify-content-between align-items-center w-100">
+            <!-- 网站标题 -->
+            <a class="navbar-brand fw-bold text-body-emphasis text-decoration-none" href="{{ '/' | relative_url }}">
+              <i class="bi bi-shield-check me-2 text-primary"></i>ANSSL 技术博客
+            </a>
+            
+            <!-- 右侧按钮组 -->
+            <div class="d-flex align-items-center">
+              <!-- Color modes 切换按钮 -->
+              <button class="btn btn-link p-2 text-body-emphasis" type="button" id="theme-toggle" aria-label="切换主题">
+                <i class="bi bi-sun-fill text-warning" id="theme-icon"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 主要内容 -->
+  <main class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-11 col-xl-10">
+        {{ content }}
+      </div>
+    </div>
+  </main>
+
+  <!-- 简单页脚 -->
+  <footer class="bg-body-secondary border-top py-4 mt-5">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-11 col-xl-10 text-center">
+          <p class="text-body-secondary mb-2">
+            © {{ 'now' | date: "%Y" }} ANSSL. 专业的SSL证书服务提供商
+          </p>
+          <p class="text-body-secondary small mb-0">
+            <a href="mailto:{{ site.email }}" class="text-decoration-none">联系我们</a> | 
+            <a href="https://anssl.cn" class="text-decoration-none" target="_blank">访问官网</a> | 
+            <a href="{{ '/feed.xml' | relative_url }}" class="text-decoration-none" target="_blank">
+              <i class="bi bi-rss me-1"></i>RSS订阅
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 回到顶部按钮 -->
+  <button class="back-to-top" onclick="scrollToTop()" title="回到顶部">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Bootstrap JS -->
+  <script src="{{ '/assets/js/bootstrap.bundle.min.js' | relative_url }}"></script>
+  
+  <!-- 回到顶部功能 -->
+  <script>
+    // 显示/隐藏回到顶部按钮
+    window.addEventListener('scroll', function() {
+      const backToTop = document.querySelector('.back-to-top');
+      if (window.pageYOffset > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+
+    // 回到顶部功能
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  </script>
+</body>
+</html>
