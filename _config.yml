@@ -1,5 +1,6 @@
-url: "" # ANSSL官网域名
-baseurl: "/anssl_blog" # 博客子路径
+url: "https://anssl.cn"
+baseurl: "/blog"
+
 title: "AnSSL博客" # 网站标题
 author: "AnSSL团队" # 作者名称
 email: "contact@anssl.cn" # 联系邮箱
