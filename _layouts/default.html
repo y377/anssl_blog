@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: 'zh' }}">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    <title>{% if page.title %}{{ page.title }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    <!-- <script charset="UTF-8" id="LA_COLLECT" src="//sdk.51.la/js-sdk-pro.min.js"></script>
+    <script>LA.init({id:"KC9wJgSCBUg4ukNc",ck:"KC9wJgSCBUg4ukNc"})</script> -->
+    <script src="{{ '/assets/js/color-theme.js' | relative_url }}"></script>
+    {% seo %}
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+    <script src="{{ '/assets/js/highlight.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/copy.js' | relative_url }}"></script>
+</head>
+
+<body class="{% if page.url == '/' %}is-home{% endif %}">
+    {% include nav.html %}
+    {% include ad.html %}
+    <main class="container{% unless page.url == '/' %} layout-width{% endunless %}">
+        <!-- <div class="zhuyao"> -->
+        {{ content }}
+        <!-- </div> -->
+    </main>
+    <!-- 📱📱 小屏幕按钮组（TOC + 回到顶部） -->
+    <div id="mobile-tools" class="btn-group position-fixed bottom-0 end-0 m-3 d-lg-none" style="z-index: 1050;">
+        <!-- 回到顶部 -->
+        <button id="back-to-top-mobile" type="button" class="btn btn-secondary">
+            <i class="bi bi-arrow-up"></i>
+        </button>
+        <!-- TOC（仅文章页才会显示，通过 JS 控制） -->
+        <button id="mobile-toc-btn" type="button" class="btn btn-primary d-none" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas">
+            <i class="bi bi-list-ul"></i>
+        </button>
+    </div>
+    <!-- 🖥 桌面端回到顶部按钮 -->
+    <button id="back-to-top" class="btn btn-secondary position-fixed bottom-0 end-0 m-3 d-none d-lg-inline-flex
+               align-items-center justify-content-center" aria-label="回到顶部">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+    {% include footer.html %}
+    <script src="{{ '/assets/js/bootstrap.bundle.min.js' | relative_url }}"></script>
+    <script src="{{ '/assets/js/tool.js' | relative_url }}"></script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+---
+layout: default
+---
+<div class="container-fluid">
+    <h1 class="mb-2 text-center">{{ page.title }}</h1>
+    <!-- 文章元信息 -->
+    <div class="d-flex flex-wrap align-items-center gap-4 justify-content-center text-muted">
+        {%- if page.date -%}
+        <div class="d-flex align-items-center">
+            <i class="bi bi-calendar-event me-2"></i>
+            <time datetime="{{ page.date | date_to_xmlschema }}">
+                {{ page.date | date: "%Y年%m月%d日" }}
+            </time>
+        </div>
+        {%- endif -%}
+        <div class="d-flex align-items-center">
+            <i class="bi bi-clock me-2"></i>
+            <span>阅读时间: {{ content | number_of_words | divided_by: 200 | plus: 1 }} 分钟</span>
+        </div>
+    </div>
+    {%- assign toc_html_raw = content | toc_only -%}
+    {%- assign toc_html = toc_html_raw | replace: '<a href="', '<a class=" text-decoration-none toc-link" href="' -%}
+    {%- assign has_toc = page.toc != false and toc_html != "" -%}
+
+    <div class="row pt-4">
+        {%- if has_toc -%}
+        <!-- 桌面端 TOC（>= lg 显示） -->
+        <aside class="col-lg-3 d-none d-lg-block toc-desktop">
+            <!-- 外壳负责圆角 + 裁切滚动条，不再用左右 margin，避免撑出横向滚动 -->
+            <div class="toc-shell small sticky-top mt-lg-4 border rounded-3">
+                <h5 class="text-bg-body py-3 px-3 mb-0 border-bottom">
+                    <i class="bi bi-list-ul me-2"></i>本页目录
+                </h5>
+                <!-- 这里保留 id="toc"，tool.js 里高亮才能命中 -->
+                <nav id="toc" class="toc-nav">
+                    {{ toc_html }}
+                </nav>
+            </div>
+        </aside>
+        {%- endif -%}
+        <!-- 正文区域：有 TOC 时 lg 以上为 9 列，否则 12 列 -->
+        <article class="{% if has_toc %}col-lg-9{% else %}col-12{% endif %} px-lg-3">
+            <div class="toc-content lh-lg">
+                {{ content | inject_anchors }}
+            </div>
+        </article>
+</div>
+{% if has_toc %}
+<!-- 📱 Offcanvas（左侧抽屉） -->
+<div class="offcanvas offcanvas-start" tabindex="-1" id="tocOffcanvas">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">目录</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body small">
+        <nav>
+            {{ toc_html }}
+        </nav>
+    </div>
+</div>
+{% endif %}
+{% if page.previous or page.next %}
+<hr class="my-4" />
+<!-- 上一篇 / 下一篇：用 row/col 做栅格，而不是 flex + gap，规避横向撑爆 -->
+<div class="row g-3 post-pager">
+    {% if page.previous %}
+    <div class="col-md-6">
+        <a href="{{ page.previous.url | relative_url }}" class="post-pager-item text-decoration-none d-block h-100">
+            <div class="border rounded-3 p-3 h-100">
+                <small class="text-muted d-block mb-1">
+                    <i class="bi bi-arrow-left-short me-1"></i>上一篇
+                </small>
+                <div class="fw-semibold text-body-emphasis text-truncate">
+                    {{ page.previous.title }}
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+    {% if page.next %}
+    <div class="col-md-6">
+        <a href="{{ page.next.url | relative_url }}" class="post-pager-item text-decoration-none d-block h-100">
+            <div class="border rounded-3 p-3 h-100 text-md-end">
+                <small class="text-muted d-block mb-1">
+                    下一篇<i class="bi bi-arrow-right-short ms-1"></i>
+                </small>
+                <div class="fw-semibold text-body-emphasis text-truncate">
+                    {{ page.next.title }}
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+</div>
+{% include ad.html %}
+<style>
+/* TOC 外壳：负责圆角和裁切滚动条 */
+/* 修复滚动条在圆角处断开的情况 */
+.toc-shell {
+    overflow: hidden;
+    background-color: var(--bs-body-bg);
+}
+
+/* TOC 滚动区域 */
+/* 视口高度 - 上下留一点空间 */
+.toc-nav {
+    max-height: calc(100vh - 8rem);
+    overflow-y: auto;
+    padding: .75rem 1rem 1rem;
+}
+
+/* 可选：TOC 内 active 项文字高亮 */
+/*#toc li.active > a {
+  color: var(--bs-primary) !important;
+}*/
+
+/* 上一篇 / 下一篇卡片 hover 细节 */
+.post-pager-item {
+    transition: transform .15s ease-out, box-shadow .15s ease-out, background-color .15s ease-out;
+}
+
+.post-pager-item:hover .border {
+    background-color: var(--bs-body-bg);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .06);
+    transform: translateY(-1px);
+}
+
+.post-pager-item .border {
+    transition: inherit;
+}
+</style>

@@ -1,0 +1,50 @@
+url: ""
+baseurl: ""
+
+
+
+title: "AnSSL博客" # 网站标题
+author: "AnSSL团队" # 作者名称
+email: "contact@anssl.cn" # 联系邮箱
+description: >- # 网站描述
+  ANSSL专业SSL证书服务博客，分享SSL证书知识、网络安全技术和HTTPS部署经验。
+lang: zh-CN # 网站语言
+timezone: Asia/Shanghai # 时区
+
+# Permalink设置
+permalink: /:year/:month/:day/:title/ # 日期+标题格式
+permalink_style: date # 使用日期样式
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-toc
+
+defaults:
+  - scope:
+      path: ""         # 根目录
+      type: "posts"    # 只匹配 _posts
+    values:
+      layout: new      # 默认布局
+      toc: true        # 你自己的额外配置（可选）
+
+
+toc:
+  min_level: 2
+  max_level: 5
+  ordered_list: false
+  no_toc_section_class: no_toc_section
+  list_id: toc
+  list_class: list-group list-group-flush
+  sublist_class: list-group list-group-flush border-start border-success border-2
+  item_class: list-group-item-action list-group-item border-0 #py-0 py-sm-0 py-md-0 py-lg-0 py-xl-0 py-xxl-0 lh-lg 
+  item_prefix: toc-
+
+markdown: kramdown
+highlighter: null
+
+kramdown:
+  syntax_highlighter: null
+  syntax_highlighter_opts:
+    disable: true

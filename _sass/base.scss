@@ -1,0 +1,204 @@
+// $list-group-active-color: #0d6efd;
+$list-group-active-bg: rgb(var(--bs-success-rgb));
+// $list-group-active-border-color: #0d6efd;
+
+@import "bootstrap/bootstrap";
+@import "bootstrap-icons";
+
+
+// 代码
+code:not(pre > code) {
+    color: $dark;
+    background-color: #e1e1e1;
+    padding: $spacer * .25 $spacer * .35;
+    border-radius: $border-radius;
+    margin: $spacer * .3;
+
+    html[data-bs-theme="dark"] & {
+        background: $gray-600;
+        color: $gray-200;
+    }
+}
+
+
+//html[data-bs-theme="dark"] & {}代码块的暗黑
+pre code.hljs {
+    display: block;
+    overflow-x: auto;
+    padding: $spacer * 1;
+}
+
+code.hljs {
+    padding: $spacer * 0.3 $spacer * 0.5;
+}
+
+.pre-wrapper,
+.hljs {
+    background: $gray-900;
+    color: $gray-200;
+
+    html[data-bs-theme="dark"] & {
+        background: $black;
+        color: $gray-200;
+    }
+}
+
+.hljs-keyword,
+.hljs-literal,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-strong,
+.hljs-tag {
+    color: $danger;
+
+    html[data-bs-theme="dark"] & {
+        color: adjust-hue($danger, -10deg);
+    }
+}
+
+.hljs-code {
+    color: $info;
+
+    html[data-bs-theme="dark"] & {
+        color: adjust-hue($info, 10deg);
+    }
+}
+
+.hljs-attribute,
+.hljs-link,
+.hljs-regexp,
+.hljs-symbol {
+    color: #ffc107;
+
+    html[data-bs-theme="dark"] & {
+        color: $success;
+    }
+
+}
+
+.hljs-addition,
+.hljs-built_in,
+.hljs-bullet,
+.hljs-emphasis,
+.hljs-section,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-string,
+.hljs-subst,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-title,
+.hljs-type,
+.hljs-variable {
+    color: $success;
+
+    html[data-bs-theme="dark"] & {
+        color: adjust-hue($warning, -5deg);
+    }
+}
+
+.hljs-class .hljs-title,
+.hljs-title.class_ {
+    color: $white;
+
+    html[data-bs-theme="dark"] & {
+        color: adjust-hue($gray-300, 10deg);
+    }
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-meta,
+.hljs-quote {
+    color: $gray-600;
+
+    html[data-bs-theme="dark"] & {
+        color: $gray-500;
+    }
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-literal,
+.hljs-section,
+.hljs-selector-id,
+.hljs-selector-tag,
+.hljs-title,
+.hljs-type {
+    font-weight: $font-weight-bold;
+}
+
+pre .hljs[style]:first-child {
+    color: $gray-500;
+    border-right-color: $gray-700;
+
+    html[data-bs-theme="dark"] & {
+        color: $gray-400;
+        border-right-color: $gray-700;
+    }
+}
+
+/* 默认：大屏状态 */
+/* 左侧 TOC 默认显示，不用特意写 */
+/* 只需要默认把手机按钮藏起来 */
+.toc-mobile-toggle {
+    display: none;
+}
+
+/* 小于等于 915px：手机布局 */
+@media (max-width: 991.98px) {
+
+    /* 隐藏左侧 TOC */
+    .toc-desktop {
+        display: none !important;
+    }
+
+    /* 显示手机浮动按钮 */
+    .toc-mobile-toggle {
+        display: flex !important;
+    }
+
+    /* 小屏：layout-width 像 container-fluid 一样铺满 */
+    .layout-width {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* 小屏：文章区域永远 100% 宽 */
+    article[class*="col-"] {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+}
+
+
+table {
+    @extend .table;
+    @extend .table-bordered;
+}
+
+.toc-content {
+    ul {
+        @extend .list-group;
+        @extend .list-group-flush;
+
+        li {
+            @extend .list-group-item;
+            @extend .lh-lg;
+        }
+    }
+
+    ol {
+        @extend .list-group;
+        @extend .list-group-flush;
+        @extend .list-group-numbered;
+
+        li {
+            @extend .list-group-item;
+            @extend .lh-lg;
+        }
+    }
+}

@@ -1,0 +1,111 @@
+---
+layout: default
+---
+<div class="container-fluid py-5">
+    <h1 class="mb-2 text-center">{{ page.title }}</h1>
+    <!-- 文章元信息 -->
+    <div class="d-flex flex-wrap align-items-center gap-4 justify-content-center text-muted">
+        {%- if page.date -%}
+        <div class="d-flex align-items-center">
+            <i class="bi bi-calendar-event me-2"></i>
+            <time datetime="{{ page.date | date_to_xmlschema }}">
+                {{ page.date | date: "%Y年%m月%d日" }}
+            </time>
+        </div>
+        {%- endif -%}
+        <div class="d-flex align-items-center">
+            <i class="bi bi-clock me-2"></i>
+            <span>阅读时间: {{ content | number_of_words | divided_by: 200 | plus: 1 }} 分钟</span>
+        </div>
+    </div>
+    {%- assign toc_html_raw = content | toc_only -%}
+    {%- assign toc_html = toc_html_raw | replace: '<a href="', '<a class=" text-decoration-none toc-link" href="' -%}
+    {%- assign has_toc = page.toc != false and toc_html != "" -%}
+    <div class="row pt-3">
+        {%- if has_toc -%}
+        <!-- 桌面端 TOC（>= lg 显示） -->
+        <aside class="col-lg-3 d-none d-lg-block toc-desktop">
+            <nav class="small sticky-top overflow-y-scroll toc-nav m-lg-4 border rounded">
+                <h5 class="text-bg-body py-3 "><i class="bi bi-list-ul px-3"></i>本页目录</h5>
+                {{ toc_html }}
+            </nav>
+        </aside>
+        {%- endif -%}
+        <!-- 正文区域：有 TOC 时 lg 以上为 9 列，否则 12 列 -->
+        <article class="{% if has_toc %}col-lg-9{% else %}col-12{% endif %}">
+            <div class="toc-content lh-lg">
+                {{ content | inject_anchors }}
+            </div>
+        </article>
+    </div>
+    {% if has_toc %}
+<!-- 📱 手机端 TOC 按钮（仅文章页 + < lg 显示） -->
+<!-- <div>
+    <button type="button" class="btn btn-primary rounded-circle position-fixed bottom-0 end-0 me-3 mb-5 d-lg-none d-flex align-items-center justify-content-center toc-mobile-toggle" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-label="打开目录">
+        <i class="bi bi-list"></i>
+    </button>
+</div> -->
+<!-- 📱 Offcanvas（左侧抽屉） -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="tocOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">目录</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body small">
+            <nav>
+                {{ toc_html }}
+            </nav>
+        </div>
+    </div>
+    {% endif %}
+<!-- <hr class="my-4" />
+
+<div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+    {% if page.previous %}
+    <a href="{{ page.previous.url | relative_url }}" class="btn btn-outline-primary">
+        ← 上一篇：{{ page.previous.title }}
+    </a>
+    {% else %}
+    <span></span>
+    {% endif %}
+    {% if page.next %}
+    <a href="{{ page.next.url | relative_url }}" class="btn btn-outline-primary ms-sm-auto">
+        下一篇：{{ page.next.title }} →
+    </a>
+    {% endif %}
+</div> -->
+ <!-- 上一篇 / 下一篇：融入布局的小卡片 -->
+            {% if page.previous or page.next %}
+            <hr class="my-5" />
+
+            <nav class="post-pager d-flex flex-column flex-sm-row gap-3">
+                {% if page.previous %}
+                <a href="{{ page.previous.url | relative_url }}"
+                   class="post-pager-item post-pager-prev flex-fill text-decoration-none">
+                    <div class="border rounded-3 p-3 h-100">
+                        <small class="text-muted d-block mb-1">
+                            <i class="bi bi-arrow-left-short me-1"></i>上一篇
+                        </small>
+                        <div class="fw-semibold text-body-emphasis text-truncate">
+                            {{ page.previous.title }}
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+
+                {% if page.next %}
+                <a href="{{ page.next.url | relative_url }}"
+                   class="post-pager-item post-pager-next flex-fill text-decoration-none">
+                    <div class="border rounded-3 p-3 h-100 text-sm-end">
+                        <small class="text-muted d-block mb-1">
+                            下一篇<i class="bi bi-arrow-right-short ms-1"></i>
+                        </small>
+                        <div class="fw-semibold text-body-emphasis text-truncate">
+                            {{ page.next.title }}
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+            </nav>
+            {% endif %}
+</div>
