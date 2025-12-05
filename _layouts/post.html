@@ -20,9 +20,11 @@ layout: default
     </div>
     {%- assign toc_html_raw = content | toc_only -%}
     {%- assign toc_html = toc_html_raw | replace: '<a href="', '<a class=" text-decoration-none toc-link" href="' -%}
-    {%- assign has_toc = page.toc != false and toc_html != '' -%}
-
-    <div class="row py-5">
+    {%- assign has_toc = false -%}
+    {%- if page.toc != false and toc_html != '' -%}
+      {%- assign has_toc = true -%}
+    {%- endif -%}
+    <div class=" row py-5">
         {%- if has_toc -%}
         <!-- 桌面端 TOC（>= lg 显示） -->
         <aside class="col-lg-3 d-none d-lg-block toc-desktop">
@@ -43,20 +45,20 @@ layout: default
             </div>
         </article>
     </div>
-{% if has_toc %}
-<!-- 📱 Offcanvas（左侧抽屉） -->
-<div class="offcanvas offcanvas-start" tabindex="-1" id="tocOffcanvas">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">目录</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    {% if has_toc %}
+    <!-- 📱 Offcanvas（左侧抽屉） -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="tocOffcanvas">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title">目录</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+        </div>
+        <div class="offcanvas-body small">
+            <nav>
+                {{ toc_html }}
+            </nav>
+        </div>
     </div>
-    <div class="offcanvas-body small">
-        <nav>
-            {{ toc_html }}
-        </nav>
-    </div>
-</div>
-{% endif %}
+    {% endif %}
 </div>
 <div class="sticky-bottom d-inline-flex float-end pt-2">
     <div class="position-absolute bottom-0 end-0">
@@ -74,7 +76,6 @@ layout: default
         </div>
     </div>
 </div>
-
 {% if page.previous or page.next %}
 <div class="layout-width">
     <div class="row post-pager">
