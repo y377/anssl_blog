@@ -180,6 +180,10 @@ table {
     @extend .table-bordered;
 }
 
+img {
+    @extend .img-fluid;
+    @extend .rounded;
+}
 .toc-content {
     ul {
         @extend .list-group;

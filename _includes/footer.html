@@ -1,26 +1,14 @@
-<footer class="py-4 mt-5">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-11 col-xl-10 text-center">
-                <p class="mb-2">
-                 <i class="bi bi-c-circle pe-1"></i><span id="copyright-year"></span> AnSSL.CN 专业的SSL证书服务提供商
-                </p>
-                <p class="text-body-secondary small mb-0">
-                    <a href="mailto:contact@anssl.cn" class="text-decoration-none">联系我们</a> |
-                    <a href="https://anssl.cn" class="text-decoration-none" target="_blank">访问官网</a> |
-                    <a href="/feed.xml" class="text-decoration-none" target="_blank">
-                        <i class="bi bi-rss me-1"></i>RSS订阅
-                    </a>
-                </p>
-            </div>
-        </div>
+<footer class="py-4 mt-5 bg-body-tertiary">
+    <div class="text-center">
+        <p class="mb-2">
+            <i class="bi bi-c-circle px-1"></i>{{ site.time | date: "%Y" }} AnSSL · 免费 SSL 证书
+        </p>
+        <p class="small">
+            <a href="mailto:contact@anssl.cn" class="text-decoration-none link-body-emphasis">联系我们</a> |
+            <a href="https://anssl.cn" class="text-decoration-none link-body-emphasis" target="_blank">访问官网</a> |
+            <a href="/feed.xml" class="text-decoration-none link-body-emphasis" target="_blank">
+                <i class="bi bi-rss me-1"></i>RSS订阅
+            </a>
+        </p>
     </div>
 </footer>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const yearEl = document.getElementById("copyright-year");
-    if (yearEl) {
-        yearEl.textContent = new Date().getFullYear();
-    }
-});
-</script>

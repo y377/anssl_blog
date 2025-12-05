@@ -1,5 +1,4 @@
 ---
-layout: new
 title: "HTTPS部署完整指南：从申请到配置"
 date: 2024-01-20 14:30:00 +0800
 tags: [HTTPS, SSL, 部署, 安全, 部署指南]

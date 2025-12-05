@@ -1,5 +1,4 @@
 ---
-layout: post
 title: "SSL证书的重要性：为什么每个网站都需要HTTPS"
 date: 2024-01-15 10:00:00 +0800
 tags: [SSL, HTTPS, 安全, 证书, 网络安全]
