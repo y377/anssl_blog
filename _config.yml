@@ -8,7 +8,7 @@ author: "AnSSL团队" # 作者名称
 email: "contact@anssl.cn" # 联系邮箱
 description: >- # 网站描述
   ANSSL专业SSL证书服务博客，分享SSL证书知识、网络安全技术和HTTPS部署经验。
-lang: zh-CN # 网站语言
+lang: zh # 网站语言
 timezone: Asia/Shanghai # 时区
 
 # Permalink设置

@@ -1,7 +1,7 @@
 ---
 layout: default
 ---
-<div class="container-fluid">
+<div class="layout-width">
     <h1 class="mb-2 text-center">{{ page.title }}</h1>
     <!-- 文章元信息 -->
     <div class="d-flex flex-wrap align-items-center gap-4 justify-content-center text-muted">
@@ -20,9 +20,9 @@ layout: default
     </div>
     {%- assign toc_html_raw = content | toc_only -%}
     {%- assign toc_html = toc_html_raw | replace: '<a href="', '<a class=" text-decoration-none toc-link" href="' -%}
-    {%- assign has_toc = page.toc != false and toc_html != "" -%}
+    {%- assign has_toc = page.toc != false and toc_html != '' -%}
 
-    <div class="row pt-4">
+    <div class=" row pt-4">
         {%- if has_toc -%}
         <!-- 桌面端 TOC（>= lg 显示） -->
         <aside class="col-lg-3 d-none d-lg-block toc-desktop">
@@ -59,45 +59,59 @@ layout: default
     </div>
 </div>
 {% endif %}
-{% if page.previous or page.next %}
+</div>
+<div class="sticky-bottom d-inline-flex float-end">
+    <div class="position-absolute bottom-0 end-0">
+        <div class="d-flex float-end flex-column">
+            {%- if has_toc -%}
+            <!-- 手机目录按钮：只有有 TOC 时才渲染 -->
+            <button id="mobile-toc-btn" class="btn btn-link text-decoration-none text-nowrap me-auto hvr-bounce-to-top d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas">
+                <i class="bi bi-card-list fs-2 d-flex flex-column"></i>目录
+            </button>
+            {%- endif -%}
+            <!-- 手机回到顶部：默认隐藏，滚动后再显示 -->
+            <button class="btn btn-link hvr-bounce-to-top d-none" id="back-to-top-mobile" type="button">
+                <i class="bi bi-arrow-up-square fs-2"></i>
+            </button>
+        </div>
+    </div>
+</div>
 <hr class="my-4" />
-<!-- 上一篇 / 下一篇：用 row/col 做栅格，而不是 flex + gap，规避横向撑爆 -->
-<div class="row g-3 post-pager">
-    {% if page.previous %}
-    <div class="col-md-6">
-        <a href="{{ page.previous.url | relative_url }}" class="post-pager-item text-decoration-none d-block h-100">
-            <div class="border rounded-3 p-3 h-100">
-                <small class="text-muted d-block mb-1">
-                    <i class="bi bi-arrow-left-short me-1"></i>上一篇
-                </small>
-                <div class="fw-semibold text-body-emphasis text-truncate">
-                    {{ page.previous.title }}
+{% if page.previous or page.next %}
+<div class="layout-width">
+    <div class="row post-pager">
+        {% if page.previous %}
+        <div class="col-md-6 py-3">
+            <a href="{{ page.previous.url | relative_url }}" class="post-pager-item text-decoration-none d-block h-100">
+                <div class="border rounded-3 p-3 h-100">
+                    <small class="text-muted d-block mb-1">
+                        <i class="bi bi-arrow-left-short me-1"></i>上一篇
+                    </small>
+                    <p class="text-body-emphasis text-truncate">
+                        {{ page.previous.title }}
+                    </p>
                 </div>
-            </div>
-        </a>
-    </div>
-    {% endif %}
-    {% if page.next %}
-    <div class="col-md-6">
-        <a href="{{ page.next.url | relative_url }}" class="post-pager-item text-decoration-none d-block h-100">
-            <div class="border rounded-3 p-3 h-100 text-md-end">
-                <small class="text-muted d-block mb-1">
-                    下一篇<i class="bi bi-arrow-right-short ms-1"></i>
-                </small>
-                <div class="fw-semibold text-body-emphasis text-truncate">
-                    {{ page.next.title }}
+            </a>
+        </div>
+        {% endif %}
+        {% if page.next %}
+        <div class="col-md-6 py-3">
+            <a href="{{ page.next.url | relative_url }}" class="post-pager-item text-decoration-none d-block h-100">
+                <div class="border rounded-3 p-3 h-100 text-md-end">
+                    <small class="text-muted d-block mb-1">
+                        下一篇<i class="bi bi-arrow-right-short ms-1"></i>
+                    </small>
+                    <p class="text-body-emphasis text-truncate">
+                        {{ page.next.title }}
+                    </p>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
+        {% endif %}
     </div>
     {% endif %}
 </div>
-{% endif %}
-</div>
-
 <style>
-/* TOC 外壳：负责圆角和裁切滚动条 */
-/* 修复滚动条在圆角处断开的情况 */
 .toc-shell {
     overflow: hidden;
     background-color: var(--bs-body-bg);
@@ -111,12 +125,6 @@ layout: default
     padding: .75rem 1rem 1rem;
 }
 
-/* 可选：TOC 内 active 项文字高亮 */
-/*#toc li.active > a {
-  color: var(--bs-primary) !important;
-}*/
-
-/* 上一篇 / 下一篇卡片 hover 细节 */
 .post-pager-item {
     transition: transform .15s ease-out, box-shadow .15s ease-out, background-color .15s ease-out;
 }
