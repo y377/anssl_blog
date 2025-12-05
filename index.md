@@ -7,13 +7,13 @@ title: "首页"
         {% if site.posts.size > 0 %}
         {% for post in site.posts %}
         <article class="mb-5 pb-4 border-bottom">
-            <div class="d-flex justify-content-between align-items-start mb-2">
+            <div class="d-flex justify-content-between align-items-start mb-2 flex-column flex-md-row">
                 <h2 class="h4 fw-bold mb-0">
                     <a href="{{ post.url | relative_url }}" class="text-decoration-none text-body">
                         {{ post.title }}
                     </a>
                 </h2>
-                <small class="text-muted">{{ post.date | date: "%Y-%m-%d" }}</small>
+                <small class="text-muted py-2 py-md-2 py-lg-0"><i class="bi bi-pencil-square pe-1"></i>{{ post.date | date: "%Y-%m-%d" }}</small>
             </div>
             {% if post.description %}
             <p class="text-muted mb-3">{{ post.description }}</p>

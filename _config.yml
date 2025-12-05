@@ -1,8 +1,6 @@
 url: ""
 baseurl: ""
 
-
-
 title: "AnSSL博客" # 网站标题
 author: "AnSSL团队" # 作者名称
 email: "contact@anssl.cn" # 联系邮箱
@@ -11,9 +9,6 @@ description: >- # 网站描述
 lang: zh # 网站语言
 timezone: Asia/Shanghai # 时区
 
-# Permalink设置
-#permalink: /:year/:month/:day/:title/ # 日期+标题格式
-#permalink_style: date # 使用日期样式
 permalink: pretty
 plugins:
   - jekyll-feed
@@ -31,14 +26,14 @@ defaults:
 
 
 toc:
-  min_level: 2
-  max_level: 5
+  min_level: 1
+  max_level: 6
   ordered_list: false
   no_toc_section_class: no_toc_section
   list_id: toc
   list_class: list-group list-group-flush
   sublist_class: list-group list-group-flush border-start border-success border-2
-  item_class: list-group-item-action list-group-item border-0 #py-0 py-sm-0 py-md-0 py-lg-0 py-xl-0 py-xxl-0 lh-lg 
+  item_class: list-group-item-action list-group-item border-0
   item_prefix: toc-
 
 markdown: kramdown
@@ -48,3 +43,7 @@ kramdown:
   syntax_highlighter: null
   syntax_highlighter_opts:
     disable: true
+
+sass:
+  style: compressed
+  sourcemap: never

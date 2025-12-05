@@ -182,90 +182,202 @@ if (typeof window !== "undefined" && !window.copyToClipboard) {
 }
 
 // 正文标题复制链接 + Tooltip（按钮只显示图标，文字放 Tooltip）
+// document.addEventListener("DOMContentLoaded", () => {
+//     const headings = document.querySelectorAll(
+//         ".toc-content h2, .toc-content h3, .toc-content h4, .toc-content h5, .toc-content h6"
+//     );
+
+//     headings.forEach((heading) => {
+//         let id = heading.id;
+
+//         const injectedAnchor = heading.querySelector("a.anchor");
+//         if (!id && injectedAnchor) {
+//             const href = injectedAnchor.getAttribute("href") || "";
+//             if (href.startsWith("#")) {
+//                 id = href.slice(1);
+//                 heading.id = id;
+//             }
+//         }
+
+//         if (!id) return;
+
+//         if (injectedAnchor) injectedAnchor.remove();
+
+//         heading.classList.add("d-flex", "align-items-center", "gap-2", "flex-wrap");
+
+//         const btn = document.createElement("button");
+//         btn.type = "button";
+//         btn.classList.add(
+//             "btn",
+//             "btn-link",
+//             "btn-sm",
+//             "p-0",
+//             "heading-copy-btn"
+//         );
+//         btn.setAttribute("data-bs-toggle", "tooltip");
+//         btn.setAttribute("data-bs-placement", "top");
+//         btn.setAttribute("data-bs-title", "复制");
+//         btn.setAttribute("aria-label", "复制");
+
+//         const icon = document.createElement("i");
+//         // 初始不设 class，交给 setState 控制
+//         btn.appendChild(icon);
+
+//         heading.appendChild(btn);
+
+//         const tooltip = bootstrap.Tooltip.getOrCreateInstance(btn);
+
+//         const setState = (state) => {
+//             btn.classList.remove("text-secondary", "text-success", "text-danger");
+
+//             if (state === "success") {
+//                 icon.className = "bi bi-clipboard-check";
+//                 btn.classList.add("text-success");
+//                 tooltip.setContent({ ".tooltip-inner": "已复制" });
+//             } else if (state === "fail") {
+//                 icon.className = "bi bi-clipboard-x";
+//                 btn.classList.add("text-danger");
+//                 tooltip.setContent({ ".tooltip-inner": "失败" });
+//             } else {
+//                 // idle：锚点样式
+//                 icon.className = "bi bi-link-45deg";
+//                 btn.classList.add("text-secondary");
+//                 tooltip.setContent({ ".tooltip-inner": "复制" });
+//             }
+//         };
+
+//         setState("idle");
+
+//         btn.addEventListener("click", async (event) => {
+//             event.preventDefault();
+//             event.stopPropagation();
+
+//             const url = `${window.location.origin}${window.location.pathname}#${encodeURIComponent(
+//         id
+//       )}`;
+
+//             try {
+//                 await copyToClipboard(url);
+//                 setState("success");
+//             } catch (err) {
+//                 console.error("复制失败", err);
+//                 setState("fail");
+//             }
+
+//             tooltip.show();
+//             setTimeout(() => setState("idle"), 1500);
+//         });
+//     });
+// });
+
 document.addEventListener("DOMContentLoaded", () => {
-    const headings = document.querySelectorAll(
-        ".toc-content h2, .toc-content h3, .toc-content h4"
+  const headings = document.querySelectorAll(
+    ".toc-content h2, .toc-content h3, .toc-content h4, .toc-content h5, .toc-content h6"
+  );
+
+  headings.forEach((heading) => {
+    let id = heading.id;
+
+    // 兼容 jekyll-toc 注入的 <a class="anchor" href="#...">
+    const injectedAnchor = heading.querySelector("a.anchor");
+    if (!id && injectedAnchor) {
+      const href = injectedAnchor.getAttribute("href") || "";
+      if (href.startsWith("#")) {
+        id = href.slice(1);
+        heading.id = id;
+      }
+    }
+
+    // 没有 id，没法生成锚点链接，直接跳过
+    if (!id) return;
+
+    // 无论是否加按钮，都把旧的锚点图标移掉，避免重复
+    if (injectedAnchor) injectedAnchor.remove();
+
+    // ========= “是否创建按钮”的统一逻辑（H2~H6 通用） =========
+    let shouldCreate = true;
+
+    const next = heading.nextElementSibling;
+    if (next && /^H[2-6]$/i.test(next.tagName)) {
+      // 如果下一个兄弟元素还是 H2~H6，
+      // 认为当前这个只是“分组标题”，不直接挂正文，不加按钮。
+      shouldCreate = false;
+    }
+
+    if (!shouldCreate) {
+      return; // 不给这个标题创建复制按钮
+    }
+    // ========= 逻辑结束 =========
+
+    // 给标题加上 flex 布局，图标和文字排一行
+    heading.classList.add(
+      "d-flex",
+      "align-items-center",
+      "gap-2",
+      "flex-wrap"
     );
 
-    headings.forEach((heading) => {
-        let id = heading.id;
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.classList.add(
+      "btn",
+      "btn-link",
+      "btn-sm",
+      "p-0",
+      "heading-copy-btn"
+    );
+    btn.setAttribute("data-bs-toggle", "tooltip");
+    btn.setAttribute("data-bs-placement", "top");
+    btn.setAttribute("data-bs-title", "复制");
+    btn.setAttribute("aria-label", "复制");
 
-        const injectedAnchor = heading.querySelector("a.anchor");
-        if (!id && injectedAnchor) {
-            const href = injectedAnchor.getAttribute("href") || "";
-            if (href.startsWith("#")) {
-                id = href.slice(1);
-                heading.id = id;
-            }
-        }
+    const icon = document.createElement("i");
+    // 初始不设 class，交给 setState 控制
+    btn.appendChild(icon);
 
-        if (!id) return;
+    heading.appendChild(btn);
 
-        if (injectedAnchor) injectedAnchor.remove();
+    const tooltip = bootstrap.Tooltip.getOrCreateInstance(btn);
 
-        heading.classList.add("d-flex", "align-items-center", "gap-2", "flex-wrap");
+    const setState = (state) => {
+      btn.classList.remove("text-secondary", "text-success", "text-danger");
 
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.classList.add(
-            "btn",
-            "btn-link",
-            "btn-sm",
-            "p-0",
-            "heading-copy-btn"
-        );
-        btn.setAttribute("data-bs-toggle", "tooltip");
-        btn.setAttribute("data-bs-placement", "top");
-        btn.setAttribute("data-bs-title", "复制");
-        btn.setAttribute("aria-label", "复制");
+      if (state === "success") {
+        icon.className = "bi bi-clipboard-check";
+        btn.classList.add("text-success");
+        tooltip.setContent({ ".tooltip-inner": "已复制" });
+      } else if (state === "fail") {
+        icon.className = "bi bi-clipboard-x";
+        btn.classList.add("text-danger");
+        tooltip.setContent({ ".tooltip-inner": "失败" });
+      } else {
+        // idle：锚点样式
+        icon.className = "bi bi-link-45deg";
+        btn.classList.add("text-secondary");
+        tooltip.setContent({ ".tooltip-inner": "复制" });
+      }
+    };
 
-        const icon = document.createElement("i");
-        // 初始不设 class，交给 setState 控制
-        btn.appendChild(icon);
+    setState("idle");
 
-        heading.appendChild(btn);
+    btn.addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
 
-        const tooltip = bootstrap.Tooltip.getOrCreateInstance(btn);
-
-        const setState = (state) => {
-            btn.classList.remove("text-secondary", "text-success", "text-danger");
-
-            if (state === "success") {
-                icon.className = "bi bi-clipboard-check";
-                btn.classList.add("text-success");
-                tooltip.setContent({ ".tooltip-inner": "已复制" });
-            } else if (state === "fail") {
-                icon.className = "bi bi-clipboard-x";
-                btn.classList.add("text-danger");
-                tooltip.setContent({ ".tooltip-inner": "失败" });
-            } else {
-                // idle：锚点样式
-                icon.className = "bi bi-link-45deg";
-                btn.classList.add("text-secondary");
-                tooltip.setContent({ ".tooltip-inner": "复制" });
-            }
-        };
-
-        setState("idle");
-
-        btn.addEventListener("click", async (event) => {
-            event.preventDefault();
-            event.stopPropagation();
-
-            const url = `${window.location.origin}${window.location.pathname}#${encodeURIComponent(
+      const url = `${window.location.origin}${window.location.pathname}#${encodeURIComponent(
         id
       )}`;
 
-            try {
-                await copyToClipboard(url);
-                setState("success");
-            } catch (err) {
-                console.error("复制失败", err);
-                setState("fail");
-            }
+      try {
+        await copyToClipboard(url);
+        setState("success");
+      } catch (err) {
+        console.error("复制失败", err);
+        setState("fail");
+      }
 
-            tooltip.show();
-            setTimeout(() => setState("idle"), 1500);
-        });
+      tooltip.show();
+      setTimeout(() => setState("idle"), 1500);
     });
+  });
 });
