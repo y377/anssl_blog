@@ -1,0 +1,11 @@
+.toc-content {
+    a {
+        text-decoration: auto;
+        text-decoration-skip-ink: auto;
+    }
+
+    // 非 a 标签强制无下划线
+    *:not(a) {
+        text-decoration: none;
+    }
+}

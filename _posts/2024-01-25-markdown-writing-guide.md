@@ -71,7 +71,7 @@ add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsaf
 ## 内容安全策略（CSP）
 
 ### 基础CSP配置
-
+{:.no_toc}
 ```html
 <meta http-equiv="Content-Security-Policy" content="
   default-src 'self';

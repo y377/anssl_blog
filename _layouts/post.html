@@ -2,12 +2,12 @@
 layout: default
 ---
 <div class="layout-width">
-    <h1 class="mb-2 text-center">{{ page.title }}</h1>
+    <h1 class="text-center lh-lg fs-2">{{ page.title }}</h1>
     <!-- 文章元信息 -->
     <div class="d-flex flex-wrap align-items-center gap-4 justify-content-center text-muted">
         {%- if page.date -%}
         <div class="d-flex align-items-center">
-            <i class="bi bi-calendar-event me-2"></i>
+            <i class="bi bi-pencil-square me-2"></i>
             <time datetime="{{ page.date | date_to_xmlschema }}">
                 {{ page.date | date: "%Y年%m月%d日" }}
             </time>
@@ -19,20 +19,20 @@ layout: default
         </div>
     </div>
     {%- assign toc_html_raw = content | toc_only -%}
-    {%- assign toc_html = toc_html_raw | replace: '<a href="', '<a class=" text-decoration-none toc-link" href="' -%}
+    {%- assign toc_html = toc_html_raw | replace: '<a href="', '<a class="text-decoration-none toc-link" href="' -%}
     {%- assign has_toc = false -%}
     {%- if page.toc != false and toc_html != '' -%}
       {%- assign has_toc = true -%}
     {%- endif -%}
-    <div class=" row py-5">
+    <div class="row py-5">
         {%- if has_toc -%}
         <!-- 桌面端 TOC（>= lg 显示） -->
         <aside class="col-lg-3 d-none d-lg-block toc-desktop">
             <!-- 外壳负责圆角 + 裁切滚动条，不再用左右 margin，避免撑出横向滚动 -->
-            <div class="toc-shell small sticky-top border rounded-3">
-                <h6 class="py-3 px-3 mb-0 border-bottom"><i class="bi bi-list-ul mx-3"></i>目录</h6>
+            <div class="toc-shell small sticky-top">
+                <h6 class="lh-lg fw-bold"><i class="bi bi-list-ul mx-3"></i>目录</h6>
                 <!-- 这里保留 id="toc"，tool.js 里高亮才能命中 -->
-                <nav id="toc" class="toc-nav">
+                <nav id="toc" class="toc-nav border border-start-0">
                     {{ toc_html }}
                 </nav>
             </div>
@@ -49,7 +49,7 @@ layout: default
     <!-- 📱 Offcanvas（左侧抽屉） -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="tocOffcanvas">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title">目录</h5>
+            <h6 class="offcanvas-title"><i class="bi bi-list-ul mx-3"></i>目录</h6>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="offcanvas-body small">
@@ -119,9 +119,9 @@ layout: default
 /* TOC 滚动区域 */
 /* 视口高度 - 上下留一点空间 */
 .toc-nav {
-    max-height: calc(100vh - 8rem);
+    /*max-height: calc(100vh - 8rem);*/
     overflow-y: auto;
-    padding: .75rem 1rem 1rem;
+    /*padding: .75rem 1rem 1rem;*/
 }
 
 .post-pager-item {

@@ -1,7 +1,7 @@
 // $list-group-active-color: #0d6efd;
-$list-group-active-bg: rgb(var(--bs-success-rgb));
+// $list-group-active-bg: rgb(var(--bs-success-rgb));
 // $list-group-active-border-color: #0d6efd;
-
+$list-group-active-bg: rgb(var(--bs-secondary-rgb));
 @import "bootstrap/bootstrap";
 @import "bootstrap-icons";
 
@@ -186,22 +186,28 @@ img {
 .toc-content {
     ul {
         @extend .list-group;
-        @extend .list-group-flush;
+        // @extend .list-group-flush;
 
         li {
             @extend .list-group-item;
             @extend .lh-lg;
+            @extend .border-0;
         }
     }
 
     ol {
         @extend .list-group;
-        @extend .list-group-flush;
+        // @extend .list-group-flush;
         @extend .list-group-numbered;
 
         li {
             @extend .list-group-item;
             @extend .lh-lg;
+            @extend .border-0;
         }
     }
 }
+
+@import "custom/tip";
+@import "custom/toc-content";
+
