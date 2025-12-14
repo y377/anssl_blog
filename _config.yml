@@ -8,7 +8,7 @@ description: >- # 网站描述
   ANSSL专业SSL证书服务博客，分享SSL证书知识、网络安全技术和HTTPS部署经验。
 lang: zh # 网站语言
 timezone: Asia/Shanghai # 时区
-
+encoding: UTF-8 #不加的话,js文件中的中文注释会乱码
 permalink: pretty
 plugins:
   - jekyll-feed
