@@ -37,6 +37,12 @@ jobs:
         env:
           JEKYLL_ENV: production
 
+      # --- 以下为新增部署到 EdgeOne Pages 的步骤 ---
+      - name: Deploy to EdgeOne Pages
+        run: |
+          npx @teo-cli/teo-pages deploy ./_site --project anssl-blog --secretId ${{ secrets.TENCENT_SECRET_ID }} --secretKey ${{ secrets.TENCENT_SECRET_KEY }}
+      # ------------------------------------------
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
