@@ -1,12 +1,20 @@
 // $list-group-active-color: #0d6efd;
 // $list-group-active-bg: rgb(var(--bs-success-rgb));
 // $list-group-active-border-color: #0d6efd;
+
 $list-group-active-bg: rgb(var(--bs-secondary-rgb));
+
 @import "bootstrap/bootstrap";
 @import "bootstrap-icons";
 
 
+// ============================================================
 // 代码
+// ============================================================
+
+// 行内代码
+// 只处理单独的 <code>...</code>
+// 不处理 <pre><code>...</code></pre>
 code:not(pre > code) {
     color: $dark;
     background-color: #e1e1e1;
@@ -15,34 +23,61 @@ code:not(pre > code) {
     margin: $spacer * .3;
 
     html[data-bs-theme="dark"] & {
-        background: $gray-600;
+        background-color: $gray-600;
         color: $gray-200;
     }
 }
 
 
-//html[data-bs-theme="dark"] & {}代码块的暗黑
-pre code.hljs {
-    display: block;
+// 代码块容器
+// 不依赖 .hljs，因此 language-text 等纯文本代码块同样生效
+pre {
     overflow-x: auto;
-    padding: $spacer * 1;
+    background-color: $gray-900;
+    color: $gray-200;
+    border-radius: $border-radius;
+
+    html[data-bs-theme="dark"] & {
+        background-color: $black;
+        color: $gray-200;
+    }
 }
 
-code.hljs {
-    padding: $spacer * 0.3 $spacer * 0.5;
+
+// 只处理 <pre><code>...</code></pre>
+pre > code {
+    display: block;
+    padding: $spacer;
+    margin: 0;
+    color: inherit;
+    background-color: transparent;
 }
 
-.pre-wrapper,
-.hljs {
-    background: $gray-900;
+
+// 如果外层还有 JS 生成的 .pre-wrapper
+.pre-wrapper {
+    background-color: $gray-900;
     color: $gray-200;
 
     html[data-bs-theme="dark"] & {
-        background: $black;
+        background-color: $black;
         color: $gray-200;
     }
 }
 
+
+// Highlight.js 本身不再负责代码块背景和布局
+// 只负责语法高亮
+pre > code.hljs {
+    display: block;
+    overflow-x: visible;
+    padding: $spacer;
+    color: inherit;
+    background-color: transparent;
+}
+
+
+// Highlight.js 语法颜色
 .hljs-keyword,
 .hljs-literal,
 .hljs-name,
@@ -73,7 +108,6 @@ code.hljs {
     html[data-bs-theme="dark"] & {
         color: $success;
     }
-
 }
 
 .hljs-addition,
@@ -138,6 +172,11 @@ pre .hljs[style]:first-child {
     }
 }
 
+
+// ============================================================
+// TOC 响应式
+// ============================================================
+
 /* 默认：大屏状态 */
 /* 左侧 TOC 默认显示，不用特意写 */
 /* 只需要默认把手机按钮藏起来 */
@@ -174,6 +213,10 @@ pre .hljs[style]:first-child {
 }
 
 
+// ============================================================
+// Markdown 表格与图片
+// ============================================================
+
 table {
     @extend .table;
     @extend .table-bordered;
@@ -183,7 +226,14 @@ img {
     @extend .img-fluid;
     @extend .rounded;
 }
+
+
+// ============================================================
+// TOC 内容
+// ============================================================
+
 .toc-content {
+
     ul {
         @extend .list-group;
         // @extend .list-group-flush;
@@ -208,6 +258,6 @@ img {
     }
 }
 
+
 @import "custom/tip";
 @import "custom/toc-content";
-
