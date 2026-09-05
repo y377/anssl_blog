@@ -13,7 +13,7 @@ tags:
   - 腾讯云
 ---
 
-![ANSSL.CN Linux SSL 新手教程](images/00-cover.png)
+![ANSSL.CN Linux SSL 新手教程]({{ "/assets/image/00-cover.png" | relative_url }})
 
 > 第一次给网站安装 SSL 证书，最容易卡住的地方通常不是 Linux 命令，而是不知道“域名解析、证书验证、证书文件、Nginx/Apache 配置”之间到底是什么关系。
 >
@@ -37,7 +37,7 @@ https://example.com
 
 整个过程可以拆成 7 步：
 
-![从申请到部署的完整流程](images/01-flow.png)
+![从申请到部署的完整流程]({{ "/assets/image/01-flow.png" | relative_url }})
 
 1. 把域名解析到你的 Linux 服务器；
 2. 在 ANSSL.CN 申请 SSL 证书；
@@ -363,7 +363,7 @@ Nginx / Apache 从哪里读取证书
 
 如果 ANSSL 显示多条验证记录，就全部添加，不要只添加第一条。
 
-![阿里云和腾讯云 CNAME 验证填写示意](images/02-dns-cname.png)
+![阿里云和腾讯云 CNAME 验证填写示意]({{ "/assets/image/02-dns-cname.png" | relative_url }})
 
 ---
 
@@ -554,7 +554,7 @@ private.key
 
 这样以后不会到处找文件。
 
-![Linux 证书文件目录与 Nginx Apache 的关系](images/03-server-files.png)
+![Linux 证书文件目录与 Nginx Apache 的关系]({{ "/assets/image/03-server-files.png" | relative_url }})
 
 ## 1. 先创建目录
 
